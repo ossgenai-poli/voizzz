@@ -349,6 +349,18 @@ Orchestration is a hybrid of a durable workflow engine and a reasoning superviso
 
 The detailed architecture is specified in [Voizzz Orchestration Agent Architecture](../superpowers/specs/2026-09-07-orchestration-agent-architecture-design.md).
 
+### 14.1 Product administration
+
+Voizzz Admin is a separate product control plane for configuring product-wide behavior and overseeing operations. It is not part of the customer application and does not configure personal user choices.
+
+Engineering owns the foundational platform and approved providers. Admin configures system prompts, agent behavior, orchestration, approved tools, channels, policies, pricing rules, evaluations, and releases. Customers remain the sole authority for their personal preferences, Contacts, Memory, channel selections, and Task or Message approvals.
+
+For the Voizzz SaaS deployment, authorized Admins may inspect aggregate and individual-call operations, including recordings and transcripts. Every sensitive access is immutably audited. In a private implementation, Voizzz personnel have no access to the private customer's call data.
+
+All Admin configuration changes follow **Draft → Test → Publish → Rollback**. Approved work remains pinned to the configuration version under which the user approved it.
+
+The detailed boundary and Admin information architecture are specified in [Voizzz Admin Product Control Plane](voizzz-admin-control-plane.md).
+
 ## 15. Incoming calls and dedicated numbers
 
 Shared outgoing numbers do not support a general callback conversation. Dedicated-number customers may configure:
@@ -493,6 +505,7 @@ This PRD is the canonical product baseline. Supporting documents provide greater
 - [Conversational Task Creation](../decisions/conversational-task-creation.md)
 - [Memory, Contacts, and Attachments](../decisions/memory-contacts-attachments.md)
 - [Orchestration Agent Architecture](../superpowers/specs/2026-09-07-orchestration-agent-architecture-design.md)
+- [Admin Product Control Plane](voizzz-admin-control-plane.md)
 
 When a supporting document conflicts with this PRD, the most recently approved explicit product decision governs and the PRD should be updated in the same change.
 
