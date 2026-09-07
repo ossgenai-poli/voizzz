@@ -1,0 +1,14 @@
+{
+  "name": "voizzz-journey-prototype",
+  "private": true,
+  "version": "0.0.2",
+  "description": "Local, simulated user-journey prototype; not the production product",
+  "scripts": {
+    "start": "node prototype/server.mjs",
+    "test": "node --test prototype/tests/*.test.cjs",
+    "build": "node prototype/build.mjs"
+  },
+  "engines": { "node": ">=22.13" },
+  "devDependencies": { "jsdom": "29.1.1" }
+}
+

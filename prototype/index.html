@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Local conversational voizzz user-journey prototype. No real calls or AI."><title>voizzz · Conversation prototype</title></head><body>
+<div id="voizzz-daycare" aria-label="Voizzz daycare journey prototype">
+<style>
+#voizzz-daycare{--vz-bg:light-dark(#ffffff,#202322);--vz-shell:light-dark(#f4f6f3,#171b19);--vz-text:light-dark(#25372e,#e8eee9);--vz-muted:light-dark(#5c6c62,#aab9ae);--vz-line:light-dark(#dce4de,#3a4840);--vz-soft:light-dark(#e7efe8,#2b3e31);--vz-accent:light-dark(#285b3c,#a9d5b3);--vz-on:light-dark(#fff,#14261b);--vz-pad:24px;color:var(--vz-text);font:14px/1.55 'Segoe UI',Arial,sans-serif;color-scheme:light dark}
+#voizzz-daycare *{box-sizing:border-box}
+#voizzz-daycare .vz-shell{background:var(--vz-shell);border:1px solid var(--vz-line);border-radius:16px;overflow:hidden}
+#voizzz-daycare header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 24px;border-bottom:1px solid var(--vz-line);flex-wrap:wrap}
+#voizzz-daycare .vz-brand{font-size:26px;letter-spacing:-1.3px;font-weight:500}
+#voizzz-daycare .vz-small{font-size:12px;color:var(--vz-muted)}
+#voizzz-daycare .vz-body{display:grid;grid-template-columns:180px minmax(0,1fr);min-height:520px}
+#voizzz-daycare nav{padding:20px 12px;display:flex;flex-direction:column;gap:8px;border-right:1px solid var(--vz-line)}
+#voizzz-daycare main{padding:var(--vz-pad);min-width:0;background:var(--vz-bg)}
+#voizzz-daycare button{font:inherit;cursor:pointer;border:1px solid var(--vz-line);border-radius:9px;background:var(--vz-bg);color:var(--vz-text);padding:10px 15px;text-align:left}
+#voizzz-daycare button:hover:not(:disabled){background:var(--vz-soft)}
+#voizzz-daycare button:disabled{cursor:default;opacity:.58}
+#voizzz-daycare .vz-primary{background:var(--vz-accent);color:var(--vz-on);border-color:var(--vz-accent)}
+#voizzz-daycare .vz-primary:hover:not(:disabled){background:var(--vz-accent);filter:brightness(.94)}
+#voizzz-daycare .vz-nav-current{background:var(--vz-soft);border-color:transparent}
+#voizzz-daycare .vz-nav-note{padding:4px 12px;margin-top:12px}
+#voizzz-daycare h1{font-size:23px;font-weight:500;line-height:1.3;margin:0}
+#voizzz-daycare h2{font-size:17px;font-weight:500;margin:0 0 10px}
+#voizzz-daycare p{margin:8px 0 16px}
+#voizzz-daycare .vz-top{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:22px}
+#voizzz-daycare .vz-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#voizzz-daycare .vz-stack{display:grid;gap:18px}
+#voizzz-daycare .vz-surface{border:1px solid var(--vz-line);border-radius:12px;padding:20px;background:var(--vz-bg)}
+#voizzz-daycare .vz-bubble{background:var(--vz-shell);padding:18px;border-radius:12px;margin-bottom:16px}
+#voizzz-daycare .vz-user{margin-left:36px;background:var(--vz-soft)}
+#voizzz-daycare .vz-badge{display:inline-block;border-radius:20px;background:var(--vz-soft);padding:4px 10px;font-size:12px;white-space:nowrap}
+#voizzz-daycare .vz-item{width:100%;display:flex;gap:14px;align-items:center;justify-content:space-between;padding:18px!important}
+#voizzz-daycare .vz-item span{min-width:0;overflow-wrap:anywhere}
+#voizzz-daycare .vz-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+#voizzz-daycare label{display:block;font-size:13px}
+#voizzz-daycare input:not([type=radio]),#voizzz-daycare textarea{display:block;width:100%;font:inherit;color:var(--vz-text);background:var(--vz-bg);border:1px solid var(--vz-line);border-radius:8px;padding:11px;margin-top:6px}
+#voizzz-daycare textarea{resize:vertical;min-height:105px}
+#voizzz-daycare input[type=radio]{accent-color:var(--vz-accent)}
+#voizzz-daycare .vz-choice{border:1px solid var(--vz-line);padding:11px 15px;border-radius:9px;font-size:14px}
+#voizzz-daycare .vz-plan{display:grid;grid-template-columns:minmax(0,1fr) 235px;gap:18px}
+#voizzz-daycare dl{margin:0}
+#voizzz-daycare dt{color:var(--vz-muted);font-size:12px;margin-top:14px}
+#voizzz-daycare dt:first-child{margin-top:0}
+#voizzz-daycare dd{margin:3px 0 0;overflow-wrap:anywhere}
+#voizzz-daycare .vz-cost{font-size:25px;margin:8px 0}
+#voizzz-daycare .vz-line{border:0;border-top:1px solid var(--vz-line);margin:20px 0}
+#voizzz-daycare .vz-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+#voizzz-daycare .vz-tabs button[aria-selected=true]{background:var(--vz-soft)}
+#voizzz-daycare .vz-activity{border-left:2px solid var(--vz-line);padding-left:15px;margin:18px 0}
+#voizzz-daycare .vz-demo{margin-top:22px;padding-top:16px;border-top:1px dashed var(--vz-line)}
+#voizzz-daycare .vz-error{color:light-dark(#a32928,#ffb5ae)}
+#voizzz-daycare .vz-empty{padding:34px 10px;text-align:center}
+#voizzz-daycare .vz-spacer{flex:1}
+#voizzz-daycare [hidden]{display:none!important}
+@media(max-width:700px){#voizzz-daycare .vz-body{grid-template-columns:1fr}#voizzz-daycare nav{border-right:0;border-bottom:1px solid var(--vz-line);flex-direction:row;flex-wrap:wrap;padding:12px}#voizzz-daycare .vz-nav-note,#voizzz-daycare .vz-spacer{display:none}#voizzz-daycare .vz-plan{grid-template-columns:1fr}#voizzz-daycare main{padding:18px}#voizzz-daycare header{padding:15px 18px}}
+@media(max-width:420px){#voizzz-daycare .vz-fields{grid-template-columns:1fr}#voizzz-daycare .vz-user{margin-left:12px}#voizzz-daycare .vz-item{align-items:flex-start;flex-direction:column}#voizzz-daycare main{padding:14px}}
+</style>
+<div class="vz-shell">
+<header><span class="vz-brand">voizzz<span style="color:var(--vz-accent)">.</span></span><span class="vz-small">Prototype v3 · scripted replies · no calls or charges</span><span class="vz-badge">Poli · shared number</span></header>
+<div class="vz-body">
+<nav aria-label="Main navigation"><button id="create-menu" class="vz-primary">＋ Compose</button><button id="inbox-nav" class="vz-nav-current">Inbox</button><button id="drafts-nav">Drafts</button><button id="contacts-nav">Contacts</button><button id="memory-nav">Memory</button><button id="settings-nav">Settings</button><div class="vz-spacer"></div><span class="vz-small vz-nav-note">My Assistant<br>Shared outgoing number<br>Voice input simulated</span></nav>
+<main id="vz-main" aria-label="Task workspace"></main>
+</div></div>
+<script src="/app.js"></script>
+</div>
+<style>
+:root{color-scheme:light dark}
+body{margin:0;padding:20px;background:light-dark(#edf1ee,#131714)}
+#voizzz-daycare{max-width:1200px;margin:0 auto;font-size:16px}
+#voizzz-daycare .vz-small{font-size:13px}
+#voizzz-daycare .vz-badge{font-size:14px}
+#voizzz-daycare .vz-conversation{max-width:780px;margin:auto}
+#voizzz-daycare .vz-message{margin:0 0 25px;padding:0 0 0 16px;border-left:2px solid var(--vz-line);white-space:pre-wrap;overflow-wrap:anywhere}
+#voizzz-daycare .vz-message[data-speaker=user]{border-color:var(--vz-accent);margin-left:28px}
+#voizzz-daycare .vz-speaker{font-size:13px;color:var(--vz-muted);margin-bottom:6px}
+#voizzz-daycare .vz-composer{border:1px solid var(--vz-line);border-radius:14px;background:var(--vz-shell);padding:14px}
+#voizzz-daycare .vz-composer textarea{min-height:90px;background:transparent;border:0;margin:0 0 12px;padding:2px}
+#voizzz-daycare .vz-bottom{justify-content:space-between}
+#voizzz-daycare .vz-sample{font-size:13px;padding:7px 10px}
+#voizzz-daycare .vz-examples{margin:10px 0 20px}
+#voizzz-daycare .vz-proposal{border-left:3px solid var(--vz-accent);padding:0 0 0 20px}
+#voizzz-daycare .vz-proposal li{margin:10px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+#voizzz-daycare .vz-summary{white-space:pre-wrap}
+#voizzz-daycare .vz-storage{margin-top:10px;font-size:12px;color:var(--vz-muted)}
+#voizzz-daycare .vz-handoff-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0 14px}
+#voizzz-daycare .vz-handoff-box{min-width:0;padding:18px 20px;border:1px solid var(--vz-line);border-radius:12px;background:var(--vz-bg)}
+#voizzz-daycare .vz-handoff-box h3{margin:0 0 10px;font-size:14px;font-weight:400;color:var(--vz-muted)}
+#voizzz-daycare .vz-handoff-box p{margin:0;overflow-wrap:anywhere;white-space:pre-wrap;font-size:16px}
+#voizzz-daycare .vz-handoff-summary{grid-column:1/-1}
+#voizzz-daycare .vz-inbox-tabs{display:flex;gap:24px;border-bottom:1px solid var(--vz-line);margin:-4px 0 18px}
+#voizzz-daycare .vz-inbox-tabs button{border:0;border-radius:0;background:transparent;padding:12px 4px 10px;font-weight:500;border-bottom:3px solid transparent}
+#voizzz-daycare .vz-inbox-tabs button[aria-selected=true]{color:var(--vz-accent);border-bottom-color:var(--vz-accent)}
+#voizzz-daycare .vz-create-backdrop{position:fixed;inset:0;z-index:20;background:#0007;display:grid;place-items:center;padding:20px}
+#voizzz-daycare .vz-create-dialog{width:min(440px,100%);background:var(--vz-bg);border:1px solid var(--vz-line);border-radius:18px;padding:24px;box-shadow:0 18px 60px #0004}
+#voizzz-daycare .vz-create-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+#voizzz-daycare .vz-create-options button{min-height:92px;font-size:17px;text-align:center}
+#voizzz-daycare .vz-message-placeholder{max-width:680px;margin:10vh auto;text-align:center}
+#voizzz-daycare .vz-compose-meta{display:grid;gap:0;border-bottom:1px solid var(--vz-line);background:var(--vz-bg);padding:0 26px}
+#voizzz-daycare .vz-compose-meta label{display:grid;grid-template-columns:70px minmax(0,1fr);align-items:center;border-bottom:1px solid var(--vz-line);font-size:14px;color:var(--vz-muted)}
+#voizzz-daycare .vz-compose-meta label:last-child{border-bottom:0}
+#voizzz-daycare .vz-compose-meta input{border:0!important;border-radius:0!important;margin:0!important;padding:12px 0!important;outline:none}
+#voizzz-daycare .vz-resolved{padding:0 0 10px 70px;color:var(--vz-muted);font-size:13px}
+#voizzz-daycare .vz-record{max-width:900px;margin:0 auto}
+#voizzz-daycare .vz-record-header{padding-bottom:20px;border-bottom:1px solid var(--vz-line)}
+#voizzz-daycare .vz-record-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}
+#voizzz-daycare .vz-record-card{border:1px solid var(--vz-line);border-radius:12px;padding:18px;background:var(--vz-bg)}
+#voizzz-daycare .vz-record-card h2{font-size:14px;color:var(--vz-muted);margin-bottom:8px}
+#voizzz-daycare .vz-record-card p{margin:0}
+#voizzz-daycare .vz-record-wide{grid-column:1/-1}
+#voizzz-daycare .vz-status-line{font-size:20px;margin-bottom:6px!important}
+#voizzz-daycare .vz-timeline{border-left:2px solid var(--vz-line);padding-left:18px;margin:20px 0}
+#voizzz-daycare .vz-timeline p{margin:0 0 16px}
+#voizzz-daycare .vz-reply-panel{margin-top:22px;border-top:1px solid var(--vz-line);padding-top:18px}
+#voizzz-daycare .vz-reply-panel textarea{min-height:85px}
+#voizzz-daycare .vz-contact-row,#voizzz-daycare .vz-contact-head{display:grid;grid-template-columns:minmax(180px,1fr) minmax(160px,1fr) minmax(220px,1.4fr);gap:14px;padding:16px 4px;border-bottom:1px solid var(--vz-line)}
+#voizzz-daycare .vz-contact-head{padding-top:0;color:var(--vz-muted);font-size:12px}
+#voizzz-daycare .vz-contact-form{margin-bottom:18px}
+#voizzz-daycare .vz-file-action{cursor:pointer}
+#voizzz-daycare .vz-memory-list{display:grid;gap:12px}
+#voizzz-daycare .vz-memory-card{display:grid;grid-template-columns:minmax(180px,1.2fr) minmax(180px,1.4fr) minmax(140px,.8fr) auto;gap:14px;align-items:center;padding:15px 4px;border-bottom:1px solid var(--vz-line)}
+#voizzz-daycare .vz-memory-card p{margin:2px 0}
+#voizzz-daycare .vz-memory-card button{padding:6px 10px}
+#voizzz-daycare .vz-memory-value{overflow-wrap:anywhere}
+#voizzz-daycare .vz-memory-proposal{margin:16px 0;border-left:4px solid var(--vz-accent)}
+#voizzz-daycare .vz-chip{display:inline-flex;align-items:center;gap:7px;padding:5px 10px;border:1px solid var(--vz-line);border-radius:18px;background:var(--vz-soft);font-size:12px}
+#voizzz-daycare .vz-chip button{border:0;background:transparent;padding:0;font-size:16px;line-height:1}
+#voizzz-daycare .vz-attach-action{cursor:pointer;padding:5px 8px;border-radius:8px}
+#voizzz-daycare .vz-attach-action:hover{background:var(--vz-soft)}
+#voizzz-daycare .vz-attachment-list{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+#voizzz-daycare .vz-access-banner{display:flex;flex-direction:column;gap:3px;padding:13px 15px;margin:0 0 24px;border:1px solid var(--vz-line);border-radius:12px;background:var(--vz-soft)}
+#voizzz-daycare .vz-memory-picker{padding:18px;border:1px solid var(--vz-line);border-radius:14px;margin-bottom:24px}
+#voizzz-daycare .vz-memory-choices{display:grid;gap:10px;margin:12px 0}
+#voizzz-daycare .vz-memory-choices .vz-choice{display:flex;align-items:flex-start;gap:8px}
+#voizzz-daycare .vz-memory-disclosure{display:grid;grid-template-columns:minmax(150px,.8fr) minmax(200px,1.4fr);gap:12px;padding:10px 0;border-bottom:1px solid var(--vz-line)}
+#voizzz-daycare .vz-conversation>.vz-surface{margin-top:16px}
+#voizzz-daycare .vz-composer-actions{display:flex;align-items:center;gap:8px}
+#voizzz-daycare .vz-mic{display:grid;place-items:center;width:40px;height:40px;padding:0;border:0;border-radius:50%;background:transparent}
+#voizzz-daycare .vz-mic svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#voizzz-daycare .vz-mic[aria-pressed=true]{color:light-dark(#b42318,#ffb4ab);background:light-dark(#fff0ee,#4b2320)}
+#voizzz-daycare .vz-voice-status{min-height:18px;margin-top:7px;font-size:12px;color:var(--vz-muted);text-align:right}
+#voizzz-daycare .vz-voice-status.is-listening{color:light-dark(#b42318,#ffb4ab)}
+#voizzz-daycare .vz-settings-tabs{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:thin}
+#voizzz-daycare .vz-settings-tabs button{white-space:nowrap}
+#voizzz-daycare .vz-settings-placeholder{max-width:760px;min-height:220px;display:flex;flex-direction:column;justify-content:center}
+#voizzz-daycare .vz-inbox-list{border-top:1px solid var(--vz-line)}
+#voizzz-daycare .vz-inbox-row{display:grid;grid-template-columns:38px minmax(0,1fr);align-items:stretch;border-bottom:1px solid var(--vz-line)}
+#voizzz-daycare .vz-inbox-row:hover{background:var(--vz-shell)}
+#voizzz-daycare .vz-star{border:0;background:transparent;padding:12px 6px;text-align:center;color:var(--vz-muted);font-size:20px;border-radius:0}
+#voizzz-daycare .vz-star[aria-pressed=true]{color:light-dark(#b77900,#ffd166)}
+#voizzz-daycare .vz-inbox-open{display:grid;grid-template-columns:minmax(150px,1.1fr) minmax(260px,2fr) minmax(150px,1fr) 100px;gap:16px;align-items:center;width:100%;border:0;border-radius:0;background:transparent;padding:13px 12px;text-align:left}
+#voizzz-daycare .vz-inbox-open time{text-align:right;color:var(--vz-muted)}
+#voizzz-daycare .vz-record-actions{margin-top:-2px}
+#voizzz-daycare .vz-link-button{display:inline-block;border:1px solid var(--vz-line);border-radius:9px;background:var(--vz-bg);color:var(--vz-text);padding:10px 15px;text-decoration:none}
+#voizzz-daycare .vz-template-note{display:flex;justify-content:space-between;gap:12px;padding:10px 26px;background:var(--vz-soft);border-bottom:1px solid var(--vz-line)}
+#voizzz-daycare .vz-retained{margin:14px 26px 0;border:1px solid var(--vz-line);border-radius:12px;padding:14px 16px}
+#voizzz-daycare .vz-retained p{margin:4px 0 12px}
+@media(max-width:480px){#voizzz-daycare .vz-handoff-grid{grid-template-columns:1fr}}
+@media(max-width:650px){#voizzz-daycare .vz-record-grid{grid-template-columns:1fr}#voizzz-daycare .vz-record-wide{grid-column:auto}#voizzz-daycare .vz-contact-row,#voizzz-daycare .vz-contact-head{grid-template-columns:1fr}}
+@media(max-width:650px){#voizzz-daycare .vz-memory-card{grid-template-columns:1fr}}
+@media(max-width:850px){#voizzz-daycare .vz-inbox-open{grid-template-columns:minmax(120px,1fr) minmax(180px,2fr) 110px}#voizzz-daycare .vz-inbox-open time{display:none}}
+@media(max-width:700px){body{padding:8px}}
+/* Full-height chat surface: the stream scrolls, not the reply composer. */
+html,body{height:100%;overflow:hidden}
+body{padding:0;background:light-dark(#fff,#202322)}
+#voizzz-daycare{width:100%;max-width:none;height:100dvh;margin:0}
+#voizzz-daycare .vz-shell{height:100%;display:flex;flex-direction:column;border:0;border-radius:0}
+#voizzz-daycare header{flex:none;min-height:64px;padding:12px 24px}
+#voizzz-daycare .vz-body{flex:1;min-height:0;grid-template-columns:235px minmax(0,1fr)}
+#voizzz-daycare nav{min-height:0;overflow:auto;padding:18px 12px}
+#voizzz-daycare main{min-height:0;overflow:auto;padding:28px}
+#voizzz-daycare .vz-chat-main{display:flex;flex-direction:column;padding:0;overflow:hidden}
+#voizzz-daycare .vz-chat-heading{min-height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 26px;font-size:14px;color:var(--vz-muted)}
+#voizzz-daycare .vz-chat-heading>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#voizzz-daycare .vz-chat-layout{display:flex;flex-direction:column;flex:1;min-height:0}
+#voizzz-daycare .vz-chat-scroll{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:20px 28px}
+#voizzz-daycare .vz-chat-stream{max-width:800px;margin:0 auto}
+#voizzz-daycare .vz-message{border:0;padding:0;margin:0 0 32px;white-space:normal;display:flex;flex-direction:column;align-items:flex-start}
+#voizzz-daycare .vz-message-text{white-space:pre-wrap;overflow-wrap:anywhere;max-width:100%}
+#voizzz-daycare .vz-message[data-speaker=user]{margin:0 0 32px;align-items:flex-end}
+#voizzz-daycare .vz-message[data-speaker=user] .vz-speaker{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+#voizzz-daycare .vz-message[data-speaker=user] .vz-message-text{background:var(--vz-soft);border-radius:22px;padding:12px 20px;max-width:85%}
+#voizzz-daycare .vz-message[data-speaker=assistant] .vz-speaker{font-weight:500;color:var(--vz-accent)}
+#voizzz-daycare .vz-composer-dock{flex:none;width:min(856px,100%);margin:0 auto;padding:12px 28px 18px;background:var(--vz-bg);max-height:55%;overflow:auto}
+#voizzz-daycare .vz-composer{border-radius:24px;background:var(--vz-bg);padding:15px 18px;box-shadow:0 2px 12px light-dark(#00000008,#00000025)}
+#voizzz-daycare .vz-composer textarea{min-height:52px;max-height:130px;resize:none;outline:none;font-size:16px}
+#voizzz-daycare .vz-composer:focus-within{outline:2px solid var(--vz-accent);outline-offset:2px}
+#voizzz-daycare .vz-send{border-radius:50%;width:40px;height:40px;min-width:40px;padding:0;text-align:center;font-size:25px;line-height:1}
+#voizzz-daycare .vz-chat-actions{display:flex;align-items:center;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:10px}
+#voizzz-daycare .vz-chat-actions>span{margin-right:auto;font-size:12px}
+#voizzz-daycare .vz-chat-actions button{padding:6px 12px;font-size:13px}
+#voizzz-daycare .vz-examples{margin:8px 0 0}
+#voizzz-daycare .vz-examples .vz-row{margin-top:8px}
+#voizzz-daycare .vz-storage{font-size:12px;text-align:center;margin-top:8px}
+#voizzz-daycare .vz-chat-layout.is-empty{justify-content:center;padding-bottom:8vh;overflow:auto}
+#voizzz-daycare .is-empty .vz-chat-scroll{flex:none;overflow:visible;padding:10px 28px 26px}
+#voizzz-daycare .is-empty .vz-welcome{text-align:center;font-size:28px;line-height:1.4;font-weight:400}
+#voizzz-daycare .is-empty .vz-composer-dock{margin:0 auto;max-height:none;overflow:visible}
+#voizzz-daycare .vz-sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#voizzz-daycare #task-history{display:grid;gap:5px;margin-top:25px}
+#voizzz-daycare .vz-history-label{padding:4px 10px;color:var(--vz-muted);font-size:12px}
+#voizzz-daycare #task-history button{border:0;background:transparent;display:block;font-size:13px;overflow-wrap:anywhere;padding:10px}
+#voizzz-daycare #task-history button.vz-history-current{background:var(--vz-soft)}
+#voizzz-daycare #task-history button span{display:block;font-size:12px;color:var(--vz-muted);margin-top:3px}
+@media(max-width:700px){
+ #voizzz-daycare header{padding:8px 14px;min-height:54px}
+ #voizzz-daycare header>.vz-small{display:none}
+ #voizzz-daycare .vz-body{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}
+ #voizzz-daycare nav{padding:8px;overflow:visible;gap:6px}
+ #voizzz-daycare nav>button{padding:8px 12px;font-size:14px}
+ #voizzz-daycare #task-history{display:none}
+ #voizzz-daycare .vz-chat-heading{min-height:44px;padding:8px 16px}
+ #voizzz-daycare .vz-chat-scroll{padding:16px}
+ #voizzz-daycare .vz-composer-dock{padding:10px 14px}
+ #voizzz-daycare .is-empty .vz-welcome{font-size:23px}
+ #voizzz-daycare .vz-chat-layout.is-empty{padding-bottom:4vh}
+ #voizzz-daycare .vz-message[data-speaker=user] .vz-message-text{max-width:94%}
+}
+</style>
+</body></html>
+
